@@ -12,6 +12,8 @@ iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_wi
 # Group the data by class and calculate summary statistics for each group
 grouped_stats = iris_df.groupby('class').describe()
 
+#printed the grouped_stats df to understand exactly where the variables and stats were showing up, and to get an idea of their level in terms of the multi-indexing within the dataframe. 
+#print(grouped_stats)
 
 # Write the summary statistics to a text file
 with open('01.1_iris_summary.txt', 'w') as f:
