@@ -7,7 +7,7 @@
 import pandas as pd
 
 # Load the iris dataset
-iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+iris_df = pd.read_csv('iris.data', names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
 
 # Group the data by class and calculate summary statistics for each group
 grouped_stats = iris_df.groupby('class').describe()

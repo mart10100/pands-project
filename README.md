@@ -69,7 +69,8 @@ The line `f.write(str(grouped_stats[c]) + '\n\n')` writes out the section of the
 f.close()
 ```
 Finally, the file f (01.1_iris_summary.txt) is closed using the `close()` method. 
-<br>
+<br><br>
+
 
 ####Creating histograms of each variable
 Histograms of each variable by class was done using the matplotlib.pyplot and pandas modules. Again, this has been done by class as this seems to be a more meaningful way to view the data, given that there is no indication as to what the data is used for in the project brief (it also allows the use of more aspects of python, so I've taken liberties!). 
@@ -142,14 +143,16 @@ The formatting of the plots is done within the first for loop, if within the sec
 The lines are straightforward, with each column (minus the class column) of the grouped_stats dataframe being iterated through the loop. 
 
 **The output histograms:**
+
 ![petal_length_histogram.png](petal_length_histogram.png)
 ![petal_width_histogram.png](petal_width_histogram.png)
 ![sepal_length_histogram.png](sepal_length_histogram.png)
 ![sepal_width_histogram.png](sepal_width_histogram.png)
 <br>
-
+**Analysis of the histograms**
+<br><br>
 ####Scatter plots of variables
-
+This will need seaborn... 
 
 
 ####Other analyses
