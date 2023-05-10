@@ -12,7 +12,7 @@ Need more on research
 The first requirement of the project is to create a text file containing a summary of each variable. To do this the pandas module was used, and the [`describe()` method](https://www.w3schools.com/python/pandas/ref_df_describe.asp) was used. This gives the number of occurences of each of the variables (petal and sepal length and width), their mean, standard deviation, minimium and maximum values of each of each, as well as their first, second, and third quartiles. 
 While getting a summary of the data as a whole was straightforward using this method, breaking down down by class was a better option to better compare differences between the three classes of iris. The brief in the project detail file did not specify which way to do it, so I decided that summarizing by class would be the most meaningful. The [iris.names](iris.names) file found on the ICU page incudes summary statistics of the entire dataset, so not splitting out by class would be redundant. Doing it by class proved more difficult to format, with the code used to do so explained below. I have included a overall summary as well in the [01.0_analysis.py file](01.0_analysis.py), it has been commented out at the end. 
 
-**Unreferenced script used to summarise the data by class:**
+**Unreferenced program used to summarise the data by class:**
 ```python
 import pandas as pd
 
@@ -76,7 +76,7 @@ Finally, the file f (01.1_iris_summary.txt) is closed using the `close()` method
 Histograms of each variable by class was done using the matplotlib.pyplot and pandas modules. Again, this has been done by class as this seems to be a more meaningful way to view the data, given that there is no indication as to what the data is used for in the project brief (it also allows the use of more aspects of python, so I've taken liberties!). 
 The though process behind this part was to import the matplotlib.pyplot and pandas modules, use the grouped dataframe (same used for the summary). A for loop can then be used to work through each of the variables, plotting them against the frequency of occurrence (within a range). The matplotlib.pyplot function then comes into use, where the plt.figure function is used, and its then formatted to read well and look presentable. The plots can then be saved to .pngs within the pands-project folder.
 
-**Unreferenced script used to create histograms of each variable:**
+**Unreferenced program used to create histograms of each variable:**
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -152,7 +152,33 @@ The lines are straightforward, with each column (minus the class column) of the 
 **Analysis of the histograms**
 <br><br>
 ####Scatter plots of variables
-This will need seaborn... 
+The scatter plots have been created using a combination of the modules matplotlib.py, pandas, and seaborn. Seaborn was used as it was the only way (that I could find) to colour the scatter points by class. This program uses the dataframe again, and a for loop to work through the petal variable pair and the sepal variable pair. The first draft included the plot creation without the for loop, but this was a overly long and seemed inefficient compared to the for loop. To ensure that only petal length vs. width an sepal length vs width were paired in the scatter plots (and not petal length vs sepal width etc), a list of tuples has been used to separate define the x and y values for the plot. 
+
+**Unreferenced program used to create histograms of each variable:**
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+iris_df = pd.read_csv('iris.data', names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+
+# Define x and y variables
+dimensions = [('sepal_length', 'sepal_width'), ('petal_length', 'petal_width')]
+
+# Create scatterplots for all combinations of x and y variables
+for length, width in dimensions:
+    sns.scatterplot(data = iris_df, x = length, y = width, hue = 'class')
+    plt.xlabel(f'{length} (cm)')
+    plt.ylabel(f'{width} (cm)')
+    plt.title(f'{length} vs {width}')
+    plt.legend()
+    plt.savefig(f'scatter_{length}_vs_{width}.png')
+    plt.show()
+```
+<br>
+
+**Program explained line by line:**
 
 
 ####Other analyses
