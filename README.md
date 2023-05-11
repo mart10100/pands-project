@@ -94,7 +94,7 @@ grouped_stats = iris_df.groupby('class')
 for col in iris_df.columns[:-1]:
     for name, group in grouped_stats:
         group[col].plot.hist(alpha=0.5)
-    plt.legend()
+    plt.legend(grouped_stats.groups.keys())
     plt.title(f'{col} Frequency vs Measurement by Class')
     plt.xlabel(col)
     plt.savefig(f'{col}_histogram.png')
@@ -133,7 +133,7 @@ The first step in the for loop contains another for loop. This takes each of the
 <br>
 
 ```python 
-    plt.legend()
+    plt.legend(grouped_stats.groups.keys())
     plt.title(f'{col} Frequency vs Measurement by Class')
     plt.xlabel(f'{col} (mm)')
     plt.savefig(f'{col}_histogram.png')
@@ -150,6 +150,11 @@ The lines are straightforward, with each column (minus the class column) of the 
 ![sepal_width_histogram.png](sepal_width_histogram.png)
 <br>
 **Analysis of the histograms**
+Petal length: 
+The petal lengths are spread out between 1 mm and just under 7 mm. While the sepal dimensions are somewhat normally dittributed across their given range, the petal dimensions seem to have no real centre. When looking at the species individually, setosa has much shorter petal dimensions than versicolor and virginica. For petal length, versicolor and virginica combined seem to make a relatively normal distribution of petal lengths, while setosa is normally ditributed. It would make sense that the each species is individually moving towards a normal distribution (although petal width and sepal width weaken this argument!), as with more data points the distribution would become more statistically significant and tend towards a smoother distribution in the histogram. 
+The petal width histogram shows data that is more evenly spread when viewed by speicies, rather than centering around a mean. Setosa is the outlier again, with all its measured petal widths being less than versicolor and virginica.  
+
+
 <br><br>
 ####Scatter plots of variables
 The scatter plots have been created using a combination of the modules matplotlib.py, pandas, and seaborn. Seaborn was used as it was the only way (that I could find) to colour the scatter points by class. This program uses the dataframe again, and a for loop to work through the petal variable pair and the sepal variable pair. The first draft included the plot creation without the for loop, but this was a overly long and seemed inefficient compared to the for loop. To ensure that only petal length vs. width an sepal length vs width were paired in the scatter plots (and not petal length vs sepal width etc), a list of tuples has been used to separate define the x and y values for the plot. 
@@ -162,8 +167,22 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 iris_df = pd.read_csv('iris.data', names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+''' 
+This is a bit clunky and inefficient - can a for loop be used? Probably with some heawrecking... 
+
+sns.scatterplot(data = iris_df, x =  'sepal_length', y =  'sepal_width', hue = 'class') -- https://www.geeksforgeeks.org/create-a-scatter-plot-using-sepal-length-and-petal_width-to-separate-the-species-classes-using-scikit-learn/
+plt.title('Sepal Length vs Sepal Width')
+plt.show()
+sns.scatterplot(data = iris_df, x = 'petal_length', y = 'petal_width', hue = 'class')
+plt.title('Petal Length vs Petal Width')
+plt.show()
+'''
+# Back to figuring out another for loop
 
 # Define x and y variables
+# lengths = ['sepal_length', 'petal_length']-- These did not work for providing with variables, as the for loop output petal length vs sepal width, and sepal length vs petal width in addition to petal l v w and sepal l v w. 
+# widths = ['sepal_width', 'petal_width'] -- can try a list of tuples
+
 dimensions = [('sepal_length', 'sepal_width'), ('petal_length', 'petal_width')]
 
 # Create scatterplots for all combinations of x and y variables
@@ -179,6 +198,53 @@ for length, width in dimensions:
 <br>
 
 **Program explained line by line:**
+```python 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+Importing te relevant modules needed to run the program. 
+<br>
 
+```python 
+iris_df = pd.read_csv('iris.data', names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+```
+This line (as previously stated for the summary and histogram) reads in the iris.data csv file and assigns the names as each columns, separated by commas. 
+<br>
+
+```python 
+dimensions = [('sepal_length', 'sepal_width'), ('petal_length', 'petal_width')]
+```
+This line creates a list containing two tuples, one each for the sepal and petal dimensions. This is for the for loop used to plot the scatter plots in the next apr. The code contains comments with the thought process behind it. The first tuple item can be used as the x value, and the second tuple item can be assigned the y value for the scatter plots. 
+<br>
+
+```python
+for length, width in dimensions:
+    sns.scatterplot(data = iris_df, x = length, y = width, hue = 'class')
+```
+The for loop takes in the values from the dimensions list created previously. This allows the for loop to be used , instead of having to write out the plotting code for each pair of variables. 
+The first line within the for loop uses the seaborn module. [Using this module, Seaborn](https://www.realpythonproject.com/how-to-use-seaborn-for-data-visualization/) gives the most straightforward way of colouring  the plot points by class, thus making the output data more detailed. plotting the points by colour allows the dataset to be seen as a whole, as well as divided by the different species of iris. 
+<br>
+
+```python
+    plt.xlabel(f'{length} (cm)')
+    plt.ylabel(f'{width} (cm)')
+    plt.title(f'{length} vs {width}')
+    plt.legend()
+    plt.savefig(f'scatter_{length}_vs_{width}.png')
+    plt.show()
+```
+These lines use matplotlib.pyplot to format the output plot. Both plots have also been saved as png files so that they can be inserted here. 
+<br>
+
+**Output scater plots:**
+![scatter_petal_length_vs_petal_width.png](scatter_petal_length_vs_petal_width.png)
+![scatter_sepal_length_vs_sepal_width.png](scatter_sepal_length_vs_sepal_width.png)
 
 ####Other analyses
+
+
+
+
+####Conclusion
+The main purpose of completing this project has been to learn and build on what has been shown throughout the course, and to put the course learnings into practice. 

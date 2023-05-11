@@ -18,7 +18,7 @@ grouped_stats = iris_df.groupby('class')
 for col in iris_df.columns[:-1]:
     for name, group in grouped_stats:
         group[col].plot(kind='hist', alpha=0.5)
-    plt.legend()
+    plt.legend(grouped_stats.groups.keys())
     plt.title(f'{col} Frequency vs Measurement by Class')
     plt.xlabel(f'{col} (mm)')
     plt.savefig(f'{col}_histogram.png')
