@@ -145,17 +145,25 @@ The lines are straightforward, with each column (minus the class column) of the 
 **The output histograms:**
 
 ![petal_length_histogram.png](petal_length_histogram.png)
-![petal_width_histogram.png](petal_width_histogram.png)
-![sepal_length_histogram.png](sepal_length_histogram.png)
-![sepal_width_histogram.png](sepal_width_histogram.png)
-<br>
-**Analysis of the histograms**
-Petal length: 
 The petal lengths are spread out between 1 mm and just under 7 mm. While the sepal dimensions are somewhat normally dittributed across their given range, the petal dimensions seem to have no real centre. When looking at the species individually, setosa has much shorter petal dimensions than versicolor and virginica. For petal length, versicolor and virginica combined seem to make a relatively normal distribution of petal lengths, while setosa is normally ditributed. It would make sense that the each species is individually moving towards a normal distribution (although petal width and sepal width weaken this argument!), as with more data points the distribution would become more statistically significant and tend towards a smoother distribution in the histogram. 
-The petal width histogram shows data that is more evenly spread when viewed by speicies, rather than centering around a mean. Setosa is the outlier again, with all its measured petal widths being less than versicolor and virginica.  
+<br>
 
+![petal_width_histogram.png](petal_width_histogram.png)
+The petal width histogram shows data that is more evenly spread when viewed by speicies, rather than centering around a mean. Setosa is the outlier again, with all its measured petal widths being less than versicolor and virginica. versicolor and virginica do have some overlap, with the majority of viriginica petal widths measuring wider. The data for both of these species looks like it could also tend towards a normal distribution, if a larger smaple size was gathered. For setosa, a petal width of 0.2 mm was by far the most common measurement, occurring 28 times. The next highest frequecy of occurrence of a measurement for petal width (for all species) is 1.3 mm with 13 occurrences. While it is not an outlier for setose, it is an outlier for the combined species. This suggests that one of the ket characterisitics of the setosa species is its narrow petal width. 
+<br>
+ 
+![sepal_length_histogram.png](sepal_length_histogram.png)
+Compared with both petal dimensions, the sepal length histogram shows the range of measurements to be larger, ranging from 4.3 to 7.9 mm. Each individual species appears to have a relatively normal distribution, but all data points combines is relatively evenly spread. in terms of the range of sepal lengths, setosa is again the shortest on average, with virginica having the longest sepal length. Virginica has a relatively significant number of outliers on the upper end of the range, with 7.9 mm being the third most populous measurement for the species. 
+<BR>
+
+![sepal_width_histogram.png](sepal_width_histogram.png)
+This plot has a (close to ) normal distribution of the combined species. The range of values is larger (2.0 mm to 4.4 mm), compared with the petal width values which range from 0.1 to 2.5 mm. Setosa bucks the trend for this measurement, having the largest mean (3.4 mm) of the three species. 
+<br>
+
+Overall, these graphs, when combined, can give some valuable information about each species of iris. To apply this to the real world, setosa jumps out to me given its small petal size and wide sepals. With these distinctive attributes, it would likely be the easiest for the new programming student to distinguish after completing this analysis. Virginica has the largest mean of three of the four variables, meaning if the programming student had to pick virginica out from the three species, they would most likely be correct in picking the largest flower. Versicolor is the most average of the three species, so not of much interest to the student programmer/analyst!
 
 <br><br>
+
 ####Scatter plots of variables
 The scatter plots have been created using a combination of the modules matplotlib.py, pandas, and seaborn. Seaborn was used as it was the only way (that I could find) to colour the scatter points by class. This program uses the dataframe again, and a for loop to work through the petal variable pair and the sepal variable pair. The first draft included the plot creation without the for loop, but this was a overly long and seemed inefficient compared to the for loop. To ensure that only petal length vs. width an sepal length vs width were paired in the scatter plots (and not petal length vs sepal width etc), a list of tuples has been used to separate define the x and y values for the plot. 
 
@@ -237,9 +245,14 @@ The first line within the for loop uses the seaborn module. [Using this module, 
 These lines use matplotlib.pyplot to format the output plot. Both plots have also been saved as png files so that they can be inserted here. 
 <br>
 
-**Output scater plots:**
+**Output scatter plots:**
 ![scatter_petal_length_vs_petal_width.png](scatter_petal_length_vs_petal_width.png)
+Across the three species of iris, it is clear that there is a strong positive correlation between petal length and width. This means that as petal length increases, petal width tends to increase as well. Although petal width has been put as the y axis measurement, there is no way to say for sure if width is in response to length, or vice versa. Setosa is clustered by itself, and looks to be much smaller than versicolor and virginica. The points are more densely clustered, meaning that the variation in size is relatively small. Versicolor and virginica are clustered togather (separate from setosa), but not as densely as setosa. The positive correlation is more apparent for these two grouped together (as well as separately) than setosa, meaning the petal length and with are more dependent on each other than for setosa. 
+<br>
+
 ![scatter_sepal_length_vs_sepal_width.png](scatter_sepal_length_vs_sepal_width.png)
+The combined data appears to have no significant correlation. The points are too spread apart to have much meaning. When viewed by species, it is clear that again, setosa is clustered by itself, while versicolor and viriginica are clustered together. Setosa has a strong positive correlation, with sepal length and width increasing together. Combining versicolor and virginicathe is some positive correlation, but the correlation is not as strong. The slop of the (imaginary - might be worth investigating) r^2^ line of setosa is steeper than the combined points versicolor and virginica, meaning that increasing sepal length in setosa leads to a larger increase in width. Increase in versicolor and virginica sepal length leads to less of an increase in sepal width. These correlations can also be viewed with the axes switched, in which case the opposite would be true.
+
 
 ####Other analyses
 
