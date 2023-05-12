@@ -9,7 +9,7 @@ The Iris Plants Database was authored by multidisciplinary scientist R.A. Fisher
 
 ####Outputing a summary of each variable to a single text file:
 The first requirement of the project is to create a text file containing a summary of each variable. To do this the pandas module was used, and the [`describe()` method](https://www.w3schools.com/python/pandas/ref_df_describe.asp) was used. This gives the number of occurences of each of the variables (petal and sepal length and width), their mean, standard deviation, minimium and maximum values of each of each, as well as their first, second, and third quartiles. 
-While getting a summary of the data as a whole was straightforward using this method, breaking down down by class was a better option to better compare differences between the three classes of iris. The brief in the project detail file did not specify which way to do it, so I decided that summarizing by class would be the most meaningful. The [iris.names](iris.names) file found on the ICU page incudes summary statistics of the entire dataset, so not splitting out by class would be redundant. Doing it by class proved more difficult to format, with the code used to do so explained below. I have included a overall summary as well in the [01.0_analysis.py file](01.0_analysis.py), it has been commented out at the end. 
+While getting a summary of the data as a whole was straightforward using this method, breaking down down by class was a better option to better compare differences between the three classes of iris. The brief in the project detail file did not specify which way to do it, so I decided that summarizing by class would be the most meaningful. The [iris.names](iris.names) file found on the ICU page incudes summary statistics of the entire dataset, so not splitting out by class would be redundant. Doing it by class proved more difficult to format, with the code used to do so explained below.  
 
 **Unreferenced program used to summarise the data by class:**
 ```python
@@ -30,6 +30,7 @@ with open('01.1_iris_summary.txt', 'w') as f:
 
 f.close()
 ```
+<BR>
 
 **Program explained line by line:**
 
@@ -61,7 +62,7 @@ The first line of this section  writes ('w') the grouped statistics variable `gr
         f.write(str(grouped_stats[c]) + '\n\n')
 ```
 This section of the program has been kept together as it is easier to explain as a block rather than line by line. A for loop is used so that the dataframe `grouped_stats` (which has already had its statistics summarized by class). [Multi-indexing](https://www.datacamp.com/tutorial/pandas-multi-index) is used to access the variable names for the for loop. It does this by using `.levels[0]` - there are two levels to the dataframe `grouped_stats`, the first level (level [0]) being the petal and sepal dimensions, and the second level being the summary statistics. As the summary file is to be broken down by each variable, the first level[0] is used (this is easier to see/understand by printing the `grouped_stats` dataframe (done in 01.1_analysis.py but commented out)). 
-Within the [for loop](https://www.w3schools.com/python/python_for_loops.asp) the first line writes the string ()'variable + c +'\n'), with 'c' being the the sepal and petal dimension variables. A new line break is added to move the next line of the for loop to the next line of the output summary text. 
+Within the [for loop](https://www.w3schools.com/python/python_for_loops.asp) the first line writes the string `('variable + c +'\n')`, with `c` being the the sepal and petal dimension variables. A new line break is added to move the next line of the for loop to the next line of the output summary text. 
 The line `f.write(str(grouped_stats[c]) + '\n\n')` writes out the section of the `grouped_stats` dataframe that is related to `'c'` in that specific iteration of the for loop. The two line breaks are added to separate out the different iterations of the for loop, making it easier to read the final text file. 
 <br>
 ```python 
@@ -80,7 +81,7 @@ The though process behind this part was to import the matplotlib.pyplot and pand
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the iris dataset - same as in the analysis.py file (won't be duplicated in final program)
+# Load the iris dataset - same as in the analysis.py file 
 iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
 
 # Group the data by class (also won't be duplicated in final program)
@@ -106,7 +107,7 @@ for col in iris_df.columns[:-1]:
 import pandas as pd
 import matplotlib.pyplot as plt
 ```
-As I have first completed these in separate file for the development, I have duplicated these here. In the final program all required imports will be done at the start of the program. 
+As I have first completed these in separate file for the development, I have used these here. 
 The pandas module is imported as pd to be used in the same way in the summary stats - for the dataframe creation. As the histograms are also grouped by class, the same dataframe is used for both. 
 The matplotlib.pyplot module is imported as plt for the creation of the plots of the dataframe.
 <br>
@@ -115,14 +116,14 @@ iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_wi
 
 grouped_stats = iris_df.groupby('class')
 ```
-This line is the same as in the summary stats program, it is only here as each part of the program was completed separately beofre joining them into one analysis.py file. As previously stated, this line creates the dataframe from the iris.data file using the pandas module. 
+This line is the same as in the summary stats program, it is only here as each part of the program was completed separately before joining them into one analysis.py file. As previously stated, this line creates the dataframe from the iris.data file using the pandas module. 
 The same goes for grouping the dataframe by class, in the final analysis.py file it will already have been defined for the creation of the output for summary statistics. 
 <br>
 
 ```python
 for col in iris_df.columns[:-1]:
 ```
-To create the histograms of each variable, a for loop is used. This is more efficient than working through each of the dataframe column headings (which could be done using [...df.iloc[:0].plot...](https://www.w3schools.com/python/pandas/ref_df_iloc.asp)). The for loop uses `.columns[]` from the pandas module. This [iterates through each of the columns](https://www.geeksforgeeks.org/loop-or-iterate-over-all-or-certain-columns-of-a-dataframe-in-python-pandas/) in `iris_df`, stopping at the last column - [:-1], the `class` column is excluded.  
+To create the histograms of each variable, a for loop is used. This is more efficient than working through each of the dataframe column headings (which could be done using [...df.iloc[:0].plot...](https://www.w3schools.com/python/pandas/ref_df_iloc.asp)). The for loop uses `.columns[]` from the pandas module. This [iterates through each of the columns](https://www.geeksforgeeks.org/loop-or-iterate-over-all-or-certain-columns-of-a-dataframe-in-python-pandas/) in `iris_df`, stopping at the last column - `[:-1]`, the `class` column is excluded.  
 <br>
 ```python
     for name, group in grouped_stats:
@@ -319,6 +320,8 @@ plt.close()
 ```
 Matplotlib.pyplot is used to plot the matrix, saving it as a png and giving it a title. It also opens it in its own window. The program ends when the window is closed. 
 <BR>
+
+![correlation_matrix.png](correlation_matrix.png)
 
 **Analysis of the correlation matrix**
 The [correlation matrix](https://www.statology.org/what-is-a-strong-correlation/) is mirrored through the diagonal, as it is correlating the same variables twice. The diagonal relationships are perfectly correlated, due to the fact that the variables are being correlated with themselves. The strongest correlation for the dataset as a whole is between petal length and width at 0.96. This confirms what is seen in the scatter plot, meaning that longer petals can be found to be wider. 

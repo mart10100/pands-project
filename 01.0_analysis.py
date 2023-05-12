@@ -26,11 +26,6 @@ f.close()
 
 
 # The below script only does it as a whole, not by eachvariable
-'''
-irisdimensions_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
-# The above line uses the pandas module to read in the file iris.data from the folder, and uses the commas to separate the elements. 
-dimensions_summary_stats = irisdimensions_df.describe()
 
-with open('01.1_iris_summary.txt', 'w') as f:
-    f.write(str(dimensions_summary_stats))
-'''
+#irisdimensions_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+# The above line uses the pandas module to read in the file iris.data from the folder, and uses the commas to separate the elements. 
