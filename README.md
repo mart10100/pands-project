@@ -6,7 +6,6 @@ Research for the dataset online and summary.
 
 The Iris Plants Database was authored by multidisciplinary scientist R.A. Fisher in 1936. [It contains information](https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1469-1809.1936.tb02137.x) regarding sepal and petal dimensions, as well as the variety of iris. The multivariate dataset contains a collection of measuremtns of sepal and petal lengths and widths of *Iris setosa*, *Iris versicolor*, and *Iris viriginica*. Despite it being published in the Annals of Eugenics it has long been used as a means to [demonstrate different capabilites of of data analysis and visualisation.](https://archive.ics.uci.edu/ml/datasets/iris) 
 
-Need more on research
 
 ####Outputing a summary of each variable to a single text file:
 The first requirement of the project is to create a text file containing a summary of each variable. To do this the pandas module was used, and the [`describe()` method](https://www.w3schools.com/python/pandas/ref_df_describe.asp) was used. This gives the number of occurences of each of the variables (petal and sepal length and width), their mean, standard deviation, minimium and maximum values of each of each, as well as their first, second, and third quartiles. 
@@ -149,7 +148,7 @@ The petal lengths are spread out between 1 mm and just under 7 mm. While the sep
 <br>
 
 ![petal_width_histogram.png](petal_width_histogram.png)
-The petal width histogram shows data that is more evenly spread when viewed by speicies, rather than centering around a mean. Setosa is the outlier again, with all its measured petal widths being less than versicolor and virginica. versicolor and virginica do have some overlap, with the majority of viriginica petal widths measuring wider. The data for both of these species looks like it could also tend towards a normal distribution, if a larger smaple size was gathered. For setosa, a petal width of 0.2 mm was by far the most common measurement, occurring 28 times. The next highest frequecy of occurrence of a measurement for petal width (for all species) is 1.3 mm with 13 occurrences. While it is not an outlier for setose, it is an outlier for the combined species. This suggests that one of the ket characterisitics of the setosa species is its narrow petal width. 
+The petal width histogram shows data that is more evenly spread when viewed by speicies, rather than centering around a mean. Setosa is the outlier again, with all its measured petal widths being less than versicolor and virginica. Versicolor and virginica do have some overlap, with the majority of viriginica petal widths measuring wider. The data for both of these species looks like it could also tend towards a normal distribution, if a larger smaple size was gathered this could be validated. For setosa, a petal width of 0.2 mm was by far the most common measurement, occurring 28 times. The next highest frequecy of occurrence of a measurement for petal width (for all species) is 1.3 mm with 13 occurrences. While it is not an outlier for setosa, it is an outlier for the combined species (versicolor and virginica). This suggests that one of the ket characterisitics of the setosa species is its narrow petal width. 
 <br>
  
 ![sepal_length_histogram.png](sepal_length_histogram.png)
@@ -157,10 +156,10 @@ Compared with both petal dimensions, the sepal length histogram shows the range 
 <BR>
 
 ![sepal_width_histogram.png](sepal_width_histogram.png)
-This plot has a (close to ) normal distribution of the combined species. The range of values is larger (2.0 mm to 4.4 mm), compared with the petal width values which range from 0.1 to 2.5 mm. Setosa bucks the trend for this measurement, having the largest mean (3.4 mm) of the three species. 
+This plot has a (close to ) normal distribution of the combined species. The range of values is larger (2.0 mm to 4.4 mm), compared with the petal width values which range from 0.1 to 2.5 mm. Setosa bucks the trend for this measurement, having the largest mean (3.4 mm) of the three species. This could help in identifying setosa from the the other species, as it would likely be the flower with the wide sepals but small petals.
 <br>
 
-Overall, these graphs, when combined, can give some valuable information about each species of iris. To apply this to the real world, setosa jumps out to me given its small petal size and wide sepals. With these distinctive attributes, it would likely be the easiest for the new programming student to distinguish after completing this analysis. Virginica has the largest mean of three of the four variables, meaning if the programming student had to pick virginica out from the three species, they would most likely be correct in picking the largest flower. Versicolor is the most average of the three species, so not of much interest to the student programmer/analyst!
+Overall, these graphs, when combined, can give some valuable information about each species of iris. To apply this to the real world, setosa jumps out to me given its small petal size and wide sepals. With these distinctive attributes, it would likely be the easiest for the new programming student to distinguish after completing this analysis. Virginica has the largest mean of three of the four variables, meaning if a programming student had to pick virginica out from the three species, they would most likely be correct in picking the largest flower. Versicolor is the most average of the three species, so not of as much interest to the student programmer/analyst!
 
 <br><br>
 
@@ -255,9 +254,77 @@ The combined data appears to have no significant correlation. The points are too
 
 
 ####Other analyses
+<br>
 
+**Correlation analysis**
+Following on from the scatter plots, the precise correlation values for the pairs of variables have been calculated and formatted. This has been done using the seaborn module to create a matrix, coloured depending on how strongly correlated two variables are. 
 
+Unreferenced program used to create the correlation matrix:
 
+```python
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the iris dataset
+iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+
+# Compute the correlation matrix - .iloc[] means last column (class) is not included  
+correlation_matrix = iris_df.iloc[:, :-1].corr()
+
+# heatmap creation
+sns.heatmap(correlation_matrix, cmap='coolwarm', annot=True)
+
+# Add title, save png, and show plot
+plt.title('Correlation Matrix of Iris Dataset')
+plt.savefig('correlation_matrix.png')
+plt.show()
+plt.close()
+```
+<br>
+
+**Program explained line by line: **
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+Importing the required modules to complete the program. 
+<BR>
+
+```python 
+# Load the iris dataset
+iris_df = pd.read_csv('iris.data', header=None, names=['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'class'])
+```
+This line has been explained beofre, in a nutshell it reads in the iris.data csv file, and assigns each column (separated by a comma) to each of the variables listed in the names list. This creates the iris_df dataframe, which can be used in the pandas module. 
+<BR>
+```python
+# Compute the correlation matrix - .iloc[] means last column (class) is not included  
+correlation_matrix = iris_df.iloc[:, :-1].corr()
+```
+This line creates the correlation matrix, from the iris_df columns. The use of `.iloc[:, :-1]` selects the required rows and columns from the dataframe for the matrix. In this case all the rows - `[:,...]` are selected, and `[...:-1]` means that all the columns less the last one (classs - this is not numerical data so cannot be used) [are used in the matrix](https://www.python-engineer.com/courses/advancedpython/01-lists/). The matrix is storeed in the variable `correlation_matrix`. 
+<BR>
+
+```python 
+sns.heatmap(correlation_matrix, cmap='coolwarm', annot=True)
+```
+The seaborn module is used to create a heatmap of the correlation table. `cmap = 'coolwarm` specifies that the range of values from the matrix are to be colour coded from cool (blue) on the low end and warm (red) on the high end of the range. the `annot = true` annotates the matrix cells with the numerical values for the correlations between the linked variables. 
+<BR> 
+```python 
+plt.title('Correlation Matrix of Iris Dataset')
+plt.savefig('correlation_matrix.png')
+plt.show()
+plt.close()
+```
+Matplotlib.pyplot is used to plot the matrix, saving it as a png and giving it a title. It also opens it in its own window. The program ends when the window is closed. 
+<BR>
+
+**Analysis of the correlation matrix**
+The [correlation matrix](https://www.statology.org/what-is-a-strong-correlation/) is mirrored through the diagonal, as it is correlating the same variables twice. The diagonal relationships are perfectly correlated, due to the fact that the variables are being correlated with themselves. The strongest correlation for the dataset as a whole is between petal length and width at 0.96. This confirms what is seen in the scatter plot, meaning that longer petals can be found to be wider. 
+Sepal length is quite strongly correlated to petal width and petal length, with values of 0.82 and 0.87 respectively. This was not seen in the scatter plot, as these variables were not paired. Looking at these, it can be concluded that long sepals are linked to larger petals. 
+Sepal width is quite the opposite to sepal length. It is weakly negatively correlated wit hpetal length and width. The width of the sepal does not seem to have much impact on the petal dimensions for the dataset. 
 
 ####Conclusion
-The main purpose of completing this project has been to learn and build on what has been shown throughout the course, and to put the course learnings into practice. 
+The main purpose of completing this project has been to learn and build on what has been shown throughout the course, and to put the course learnings into practice. This project has required the use of much of the programming covered in the course, using it in new and interesting ways to complete the analysis. It has also resulted in a lot of research, finding out how to use the code, and how others have made it work for them. 
+In terms of using the data for iris identification, this may have given an insight to how to tell the difference between species, but the main takeaway has been the use of python and drawing conclusions based on the output analysis. 
